@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/projects', { useNewUrlParser: true});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -31,7 +33,7 @@ app.use(function(err, req, res, next) {
 
   // set error response
   res.status(err.status || 500);
-  res.send({error: 'error'});
+  res.send({error: err, message: err.message});
 });
 
 module.exports = app;
